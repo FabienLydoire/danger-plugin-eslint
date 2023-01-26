@@ -46,7 +46,7 @@
     "@types/jest": "^27.0.2",
     "commitizen": "^4.1.2",
     "cz-conventional-changelog": "^3.2.0",
-    "danger": "^10.2.1",
+    "danger": "https://github.com/FabienLydoire/danger-js/releases/download/11.2.3-patch/danger-11.2.3.tgz",
     "esdoc": "^1.1.0",
     "eslint": "^8.0.1",
     "husky": "^7.0.0",
