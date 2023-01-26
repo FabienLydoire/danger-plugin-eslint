@@ -41,7 +41,7 @@ export default async function eslint(config: any, extensions: string[] = [".js"]
 async function fileContents(path) {
   let contents: string
   if (danger.bitbucket_cloud != null) {
-    contents = await danger.bitbucket_cloud.api.getFileContents(path, danger.bitbucket_cloud.metadata.repoSlug, danger.bitbucket_cloud.pr.destination.commit.hash);
+    contents = await danger.bitbucket_cloud.api.getFileContents(path, danger.bitbucket_cloud.metadata.repoSlug, danger.bitbucket_cloud.pr.source.commit.hash);
   } else if (danger.bitbucket_server != null) {
     contents = await danger.bitbucket_server.api.getFileContents(path, danger.bitbucket_server.metadata.repoSlug, danger.bitbucket_server.pr.fromRef.id)
   } else if (danger.gitlab != null) {
