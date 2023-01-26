@@ -38,8 +38,22 @@ export default async function eslint(config: any, extensions: string[] = [".js"]
   return Promise.all(filesToLint.map(f => lintFile(cli, config, f)))
 }
 
+async function fileContents(path) {
+  let contents: string
+  if (danger.bitbucket_cloud != null) {
+    contents = await danger.bitbucket_cloud.api.getFileContents(path, danger.bitbucket_cloud.metadata.repoSlug, danger.bitbucket_cloud.pr.destination.commit.hash);
+  } else if (danger.bitbucket_server != null) {
+    contents = await danger.bitbucket_server.api.getFileContents(path, danger.bitbucket_server.metadata.repoSlug, danger.bitbucket_server.pr.fromRef.id)
+  } else if (danger.gitlab != null) {
+    contents = await danger.gitlab.utils.fileContents(path)
+  } else {
+    contents = await danger.github.utils.fileContents(path)
+  }
+  return contents
+}
+
 async function lintFile(linter, config, path) {
-  const contents = await danger.github.utils.fileContents(path)
+  const contents = await fileContents(path)
   const results = await linter.lintText(contents, { filePath: path })
 
   if (results.length !== 0) {
